@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>练习 4</title>
+    <script src="randominteger.js"></script>
+</head>
+<body>
+    <h1>数字猜谜游戏</h1>
+    <p>在1到100之间猜一个数字：</p>
+    <input type="text" id="guess" />
+    <button onclick="checkGuess()">提交猜测</button>
+
+    <p id="message"></p>
+    <p id="guesses"></p>
+    <p id="turns"></p>
+
+    <script>
+        let randomNumber = randomInt();
+        let turns = 10;
+        let guessedNumbers = [];
+
+        function checkGuess() {
+            let userGuess = parseInt(document.getElementById("guess").value);
+            guessedNumbers.push(userGuess);
+
+            if (userGuess === randomNumber) {
+                document.getElementById("message").textContent = "恭喜！你猜对了！";
+                resetGame();
+            } else if (turns <= 1) {
+                document.getElementById("message").textContent = "游戏结束！正确的数字是 " + randomNumber;
+                resetGame();
+            } else {
+                turns--;
+                document.getElementById("message").textContent = userGuess > randomNumber ? "太高了！" : "太低了！";
+                document.getElementById("turns").textContent = "剩余次数：" + turns;
+                document.getElementById("guesses").textContent = "你之前的猜测: " + guessedNumbers.join(", ");
+            }
+        }
+
+        function resetGame() {
+            turns = 10;
+            guessedNumbers = [];
+            randomNumber = randomInt();
+            document.getElementById("turns").textContent = "";
+            document.getElementById("guesses").textContent = "";
+        }
+    </script>
+</body>
+</html>
